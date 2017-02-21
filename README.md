@@ -2,6 +2,8 @@
 
 > An electron-vue project
 
+![Jogich](https://raw.githubusercontent.com/nju33/jogich/master/screenshot.gif)
+
 ## Build Setup
 
 ``` bash
