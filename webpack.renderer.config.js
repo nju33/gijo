@@ -33,8 +33,10 @@ let rendererConfig = {
       {
         test: /\.js$/,
         use: 'babel-loader',
-        include: [ path.resolve(__dirname, 'app/src/renderer') ],
-        exclude: /node_modules/
+        include: [
+          path.resolve(__dirname, 'app/src/renderer'),
+          path.resolve('app/node_modules/vue-octicon')
+        ],
       },
       {
         test: /\.json$/,

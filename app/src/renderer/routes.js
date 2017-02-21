@@ -1,7 +1,7 @@
 export default [
   {
     path: '/',
-    name: 'goji',
+    name: 'jogi',
     component: require('components/Jogi')
   },
   {
