@@ -1,4 +1,4 @@
-# jogich
+<h1><img src="https://github.com/nju33/jogich/blob/master/app/icons/icon.iconset/icon_16x16@2x.png?raw=true" height=30>&nbsp;Jogich</h1>
 
 > An electron-vue project
 
