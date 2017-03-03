@@ -42,8 +42,12 @@
         <button v-if="theme === 'dark'" class="theme-btn light" @click="changeTheme('light')"></button>
         <button v-else-if="theme === 'light'" class="theme-btn dark" @click="changeTheme('dark')"></button>
       </div>
-      <div class="measure-x" v-text="diffX"></div>
-      <div class="measure-y" v-text="diffY"></div>
+      <div class="measure-x" v-text="diffX"
+        :style="{background: themeAlphaColor}"
+      ></div>
+      <div class="measure-y" v-text="diffY"
+        :style="{background: themeAlphaColor}"
+      ></div>
     </div>
   </div>
 </template>
@@ -62,7 +66,9 @@
         theme: 'light',
         themes: {
           light: '#ebebeb',
+          alphaLight: 'rgba(235, 235, 235, .4)',
           dark: '#131313',
+          alphaDark: 'rgba(19, 19, 19, .4)'
         },
         done: false,
         phase: [this.getScreenPoint()],
@@ -72,6 +78,11 @@
     computed: {
       themeColor() {
         return this.theme === 'light' ? this.themes.light : this.themes.dark;
+      },
+      themeAlphaColor() {
+        return this.theme === 'light' ?
+                 this.themes.alphaDark :
+                 this.themes.alphaLight;
       },
       diffX() {
         return Math.abs(this.phase[0].x - this.phase[1].x);
@@ -214,18 +225,24 @@
     position: absolute;
   }
 
+  .measure-x,
+  .measure-y {
+    padding: .3em .5em;
+    border-radius: 2px;
+  }
+
   .measure-x {
     position: absolute;
     right: 50%;
     transform: translateY(50%);
-    top: -2em;
+    top: -3.2em;
   }
 
   .measure-y {
     position: absolute;
     bottom: 50%;
     transform: translateY(50%);
-    left: -2em;
+    left: -3.2em;
   }
 
   .close-btn {
