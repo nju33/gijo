@@ -1,6 +1,7 @@
 'use strict'
 
-import {app, screen, BrowserWindow, globalShortcut, Tray, Menu} from 'electron'
+import {app, screen, BrowserWindow, globalShortcut,
+        Tray, Menu, ipcMain} from 'electron'
 import './menu';
 
 let tray = null;
@@ -16,10 +17,11 @@ function toggleWindow() {
     return;
   }
 
+  // Strange afterimages remain
   if (mainWindow.isVisible()) {
-    mainWindow.hide();
+    mainWindow.webContents.send('hide:req');
   } else {
-    mainWindow.show();
+    mainWindow.webContents.send('show:req');
   }
 }
 
@@ -31,6 +33,15 @@ function createTray() {
       accelerator: 'CmdOrCtrl+Alt+G',
       click() {
         toggleWindow();
+      }
+    },
+    {
+      label: 'Reset',
+      click() {
+        if (mainWindow === null) {
+          return;
+        }
+        mainWindow.webContents.send('reset');
       }
     },
     {
@@ -63,11 +74,19 @@ function createWindow() {
     maximizable: false,
   });
 
-  mainWindow.loadURL(winURL)
+  mainWindow.loadURL(winURL);
 
   mainWindow.on('closed', () => {
     mainWindow = null
-  })
+  });
+
+  // Strange afterimages remain
+  ipcMain.on('hide:res', () => {
+    mainWindow.hide();
+  });
+  ipcMain.on('show:res', () => {
+    mainWindow.show();
+  });
 }
 
 function registerGlobalShortcut() {

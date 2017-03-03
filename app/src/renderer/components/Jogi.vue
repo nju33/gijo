@@ -1,5 +1,6 @@
 <template>
   <div class="box"
+       v-if="show"
        :style="{color: themeColor}"
        @mousemove="handleMousemove">
     <div v-for="(axis, idx) in phase" class="jogi"
@@ -63,6 +64,7 @@
     name: 'jogi',
     data() {
       return {
+        show: true,
         theme: 'light',
         themes: {
           light: '#ebebeb',
@@ -180,6 +182,17 @@
     mounted() {
       this.$electron.ipcRenderer.on('reset', () => {
         this.resetPhase();
+      });
+
+      // Strange afterimages remain
+      this.$electron.ipcRenderer.on('hide:req', () => {
+        this.show = false;
+        this.$electron.ipcRenderer.send('hide:res');
+      });
+
+      this.$electron.ipcRenderer.on('show:req', () => {
+        this.show = true;
+        this.$electron.ipcRenderer.send('show:res');
       });
     }
   }
