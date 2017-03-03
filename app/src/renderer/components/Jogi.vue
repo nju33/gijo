@@ -45,9 +45,11 @@
       </div>
       <div class="measure-x" v-text="diffX"
         :style="{background: themeAlphaColor}"
+        @click="copy(diffX)"
       ></div>
       <div class="measure-y" v-text="diffY"
         :style="{background: themeAlphaColor}"
+        @click="copy(diffY)"
       ></div>
     </div>
   </div>
@@ -177,6 +179,9 @@
         })();
         this.active = target;
         this.done = false;
+      },
+      copy(val) {
+        this.$electron.clipboard.writeText(String(val));
       }
     },
     mounted() {
@@ -242,6 +247,13 @@
   .measure-y {
     padding: .3em .5em;
     border-radius: 2px;
+    cursor: copy;
+    transition: .2s;
+  }
+
+  .measure-x:active,
+  .measure-y:active {
+    color: #005caf;
   }
 
   .measure-x {
