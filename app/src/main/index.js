@@ -56,7 +56,7 @@ function createWindow() {
     width,
     frame: false,
     transparent: true,
-    alwaysOnTop: true,
+    alwaysOnTop: process.env.NODE_ENV !== 'development',
     resizable: false,
     movable: false,
     minimizable: false,
