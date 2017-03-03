@@ -34,7 +34,7 @@ function createTray() {
       }
     },
     {
-      role: 'separator'
+      type: 'separator'
     },
     {
       role: 'quit'
