@@ -65,12 +65,7 @@
           dark: '#131313',
         },
         done: false,
-        phase: [
-          {
-            x: 0,
-            y: 0
-          }
-        ],
+        phase: [this.getScreenPoint()],
         active: false
       };
     },
@@ -141,14 +136,15 @@
         phase.y = y ;
       },
       nextPhase() {
-        this.phase.push({x: 0, y: 0});
+        const {x, y} = this.getScreenPoint();
+        this.phase.push({x, y});
       },
       donePhase() {
         this.done = true;
         this.active = false;
       },
       resetPhase() {
-        this.phase = [{x: 0, y: 0}];
+        this.phase = [this.getScreenPoint()];
         this.done = false;
       },
       changeTheme(theme) {
