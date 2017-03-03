@@ -1,14 +1,50 @@
 'use strict'
 
-import {app, screen, BrowserWindow, globalShortcut} from 'electron'
+import {app, screen, BrowserWindow, globalShortcut, Tray, Menu} from 'electron'
 import './menu';
 
-let mainWindow
+let tray = null;
+let mainWindow = null;
+
 const winURL = process.env.NODE_ENV === 'development'
   ? `http://localhost:${require('../../../config').port}`
   : `file://${__dirname}/index.html`
 
-function createWindow () {
+function toggleWindow() {
+  if (mainWindow === null) {
+    createWindow();
+    return;
+  }
+
+  if (mainWindow.isVisible()) {
+    mainWindow.hide();
+  } else {
+    mainWindow.show();
+  }
+}
+
+function createTray() {
+  tray = new Tray(`${__dirname}/images/trayTemplate.png`);
+  const trayMenu = Menu.buildFromTemplate([
+    {
+      label: 'Toggle Jogich',
+      accelerator: 'CmdOrCtrl+Alt+G',
+      click() {
+        toggleWindow();
+      }
+    },
+    {
+      role: 'separator'
+    },
+    {
+      role: 'quit'
+    }
+  ]);
+  tray.setToolTip('Jogich');
+  tray.setContextMenu(trayMenu);
+}
+
+function createWindow() {
   /**
    * Initial window options
    */
@@ -36,18 +72,15 @@ function createWindow () {
 
 function registerGlobalShortcut() {
   globalShortcut.register('CommandOrControl+Alt+G', () => {
-    const win = BrowserWindow.getAllWindows()[0];
-    if (win.isVisible()) {
-      win.hide();
-    } else {
-      win.show();
-    }
+    toggleWindow();
   });
 }
 
 app.on('ready', () => {
-  createWindow()
+  createTray();
+  // createWindow();
   registerGlobalShortcut();
+  app.dock.hide();
 });
 
 app.on('window-all-closed', () => {
