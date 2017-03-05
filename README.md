@@ -15,6 +15,10 @@ Also, if you think that it is difficult to see it, click on the white or black p
 
 When `CommandOrControl+Alt+G` is pressed simultaneously, the Jogich appears or disappears.
 
+## Download
+
+From the [release page](https://github.com/nju33/jogich/releases/latest)
+
 ## Build Setup
 
 ``` bash
