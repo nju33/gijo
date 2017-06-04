@@ -1,7 +1,7 @@
 {
-  "name": "jogich",
-  "version": "0.0.3",
-  "description": "An electron-vue project",
+  "name": "gijo",
+  "version": "0.1.0",
+  "description": "Ruler app that can measure intuitively",
   "main": "./dist/main.js",
   "dependencies": {
     "vue": "^2.1.10",
