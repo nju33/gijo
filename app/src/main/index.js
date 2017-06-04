@@ -29,7 +29,7 @@ function createTray() {
   tray = new Tray(`${__dirname}/images/trayTemplate.png`);
   const trayMenu = Menu.buildFromTemplate([
     {
-      label: 'Toggle Jogich',
+      label: 'Toggle Gijo',
       accelerator: 'CmdOrCtrl+Alt+G',
       click() {
         toggleWindow();

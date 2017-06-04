@@ -1,6 +1,6 @@
 {
   "name": "gijo",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Ruler app that can measure intuitively",
   "main": "./dist/main.js",
   "dependencies": {
