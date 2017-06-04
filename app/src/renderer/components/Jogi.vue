@@ -1,7 +1,10 @@
 <template>
   <div class="box"
        v-if="show"
-       :style="{color: themeColor}"
+       :style="{
+         color: themeColor,
+         background: themeAlphaColor
+       }"
        @mousemove="handleMousemove">
     <div v-for="(axis, idx) in phase" class="jogi"
          @click="phase.length === 1 ? nextPhase() : donePhase()">
