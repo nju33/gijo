@@ -1,6 +1,7 @@
 {
   "name": "gijo",
   "version": "0.1.1",
+  "main": "app/dist/main.js",
   "description": "Ruler app that can measure intuitively",
   "scripts": {
     "build": "node tasks/release.js",
@@ -11,7 +12,7 @@
     "build:mas": "cross-env PLATFORM_TARGET=mas node tasks/release.js",
     "build:win32": "cross-env PLATFORM_TARGET=win32 node tasks/release.js",
     "dev": "node tasks/runner.js",
-    "pack": "npm run pack:main && npm run pack:renderer",
+    "pack": "yarn pack:main && yarn pack:renderer",
     "pack:main": "cross-env NODE_ENV=production webpack -p --progress --colors --config webpack.main.config.js",
     "pack:renderer": "cross-env NODE_ENV=production webpack -p --progress --colors --config webpack.renderer.config.js"
   },
