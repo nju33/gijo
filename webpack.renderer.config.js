@@ -1,30 +1,28 @@
-'use strict'
+'use strict';
 
-process.env.BABEL_ENV = 'renderer'
+process.env.BABEL_ENV = 'renderer';
 
-const path = require('path')
-const pkg = require('./app/package.json')
-const settings = require('./config.js')
-const webpack = require('webpack')
-
-const ExtractTextPlugin = require('extract-text-webpack-plugin')
-const HtmlWebpackPlugin = require('html-webpack-plugin')
+const path = require('path');
+// const pkg = require('./app/package.json')
+const settings = require('./config.js');
+const webpack = require('webpack');
+const {VueLoaderPlugin} = require('vue-loader');
+// const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+// const ExtractTextPlugin = require('extract-text-webpack-plugin')
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 let rendererConfig = {
-  devtool: '#eval-source-map',
-  devServer: { overlay: true },
+  mode: process.env.NODE_ENV || 'development',
+  devServer: {overlay: true},
   entry: {
     renderer: path.join(__dirname, 'app/src/renderer/main.js')
   },
-  externals: Object.keys(pkg.dependencies || {}),
+  // externals: Object.keys(pkg.dependencies || {}),
   module: {
     rules: [
       {
         test: /\.css$/,
-        use: ExtractTextPlugin.extract({
-          fallback: 'style-loader',
-          use: 'css-loader'
-        })
+        use: ['style-loader', 'css-loader']
       },
       {
         test: /\.html$/,
@@ -36,7 +34,7 @@ let rendererConfig = {
         include: [
           path.resolve(__dirname, 'app/src/renderer'),
           path.resolve('app/node_modules/vue-octicon')
-        ],
+        ]
       },
       {
         test: /\.json$/,
@@ -81,13 +79,14 @@ let rendererConfig = {
     ]
   },
   plugins: [
-    new ExtractTextPlugin('styles.css'),
+    new VueLoaderPlugin(),
     new HtmlWebpackPlugin({
       filename: 'index.html',
       template: './app/index.ejs',
-      appModules: process.env.NODE_ENV !== 'production'
-        ? path.resolve(__dirname, 'app/node_modules')
-        : false,
+      appModules:
+        process.env.NODE_ENV !== 'production'
+          ? path.resolve(__dirname, 'app/node_modules')
+          : false
     }),
     new webpack.NoEmitOnErrorsPlugin()
   ],
@@ -98,8 +97,9 @@ let rendererConfig = {
   },
   resolve: {
     alias: {
-      'components': path.join(__dirname, 'app/src/renderer/components'),
-      'renderer': path.join(__dirname, 'app/src/renderer')
+      components: path.join(__dirname, 'app/src/renderer/components'),
+      renderer: path.join(__dirname, 'app/src/renderer'),
+      vue$: 'vue/dist/vue.common.js'
     },
     extensions: ['.js', '.vue', '.json', '.css', '.node'],
     modules: [
@@ -108,14 +108,13 @@ let rendererConfig = {
     ]
   },
   target: 'electron-renderer'
-}
-
+};
 
 /**
  * Adjust rendererConfig for production settings
  */
 if (process.env.NODE_ENV === 'production') {
-  rendererConfig.devtool = ''
+  rendererConfig.devtool = '';
 
   rendererConfig.plugins.push(
     new webpack.DefinePlugin({
@@ -129,7 +128,7 @@ if (process.env.NODE_ENV === 'production') {
         warnings: false
       }
     })
-  )
+  );
 }
 
-module.exports = rendererConfig
+module.exports = rendererConfig;
