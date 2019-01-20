@@ -1,15 +1,29 @@
-'use strict'
+'use strict';
 
-import {app, screen, BrowserWindow, globalShortcut,
-        Tray, Menu, ipcMain} from 'electron'
+import {
+  app,
+  screen,
+  BrowserWindow,
+  globalShortcut,
+  Tray,
+  Menu,
+  ipcMain
+} from 'electron';
 import './menu';
 
 let tray = null;
 let mainWindow = null;
 
-const winURL = process.env.NODE_ENV === 'development'
-  ? `http://localhost:${require('../../../config').port}`
-  : `file://${__dirname}/index.html`
+const log = text => {
+  if (process.env.NODE_ENV !== 'production') {
+    console.log(text);
+  }
+};
+
+const winURL =
+  process.env.NODE_ENV === 'development'
+    ? `http://localhost:${require('../../../config').port}`
+    : `file://${__dirname}/index.html`;
 
 function toggleWindow() {
   if (mainWindow === null) {
@@ -19,8 +33,10 @@ function toggleWindow() {
 
   // Strange afterimages remain
   if (mainWindow.isVisible()) {
+    log('hide');
     mainWindow.webContents.send('hide:req');
   } else {
+    log('show');
     mainWindow.webContents.send('show:req');
   }
 }
@@ -51,15 +67,12 @@ function createTray() {
       role: 'quit'
     }
   ]);
-  tray.setToolTip('Jogich');
+  tray.setToolTip('Gijo');
   tray.setContextMenu(trayMenu);
 }
 
 function createWindow() {
-  /**
-   * Initial window options
-   */
- const {width, height} = screen.getPrimaryDisplay().workAreaSize;
+  const {width, height} = screen.getPrimaryDisplay().workAreaSize;
   mainWindow = new BrowserWindow({
     x: 0,
     y: 0,
@@ -71,20 +84,23 @@ function createWindow() {
     resizable: false,
     movable: false,
     minimizable: false,
-    maximizable: false,
+    maximizable: false
   });
 
+  log(`winURL: ${winURL}`);
   mainWindow.loadURL(winURL);
 
   mainWindow.on('closed', () => {
-    mainWindow = null
+    mainWindow = null;
   });
 
   // Strange afterimages remain
   ipcMain.on('hide:res', () => {
+    log(`on 'hide:res'`);
     mainWindow.hide();
   });
   ipcMain.on('show:res', () => {
+    log(`on 'show:res'`);
     mainWindow.show();
   });
 }
@@ -99,17 +115,19 @@ app.on('ready', () => {
   createTray();
   // createWindow();
   registerGlobalShortcut();
-  app.dock.hide();
+  if (process.env.NODE_ENV === 'production') {
+    app.dock.hide();
+  }
 });
 
 app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') {
-    app.quit()
+    app.quit();
   }
-})
+});
 
 app.on('activate', () => {
   if (mainWindow === null) {
-    createWindow()
+    createWindow();
   }
-})
+});

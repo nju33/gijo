@@ -1,8 +1,10 @@
+import Jogi from 'components/Jogi';
+
 export default [
   {
     path: '/',
     name: 'jogi',
-    component: require('components/Jogi')
+    component: Jogi
   },
   {
     path: '*',
