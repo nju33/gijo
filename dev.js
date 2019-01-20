@@ -2,8 +2,11 @@ process.env.NODE_ENV = 'development';
 process.env.BABEL_ENV = 'main';
 
 require('@babel/register')({
+  root: __dirname,
+  only: [__dirname],
   ignore: [/node_modules/]
 });
+require('@babel/polyfill');
 
 require('electron-debug')({showDevTools: true});
 
@@ -17,4 +20,4 @@ require('electron').app.on('ready', () => {
     });
 });
 
-require('./index');
+require('./app/src/main');

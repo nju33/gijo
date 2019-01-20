@@ -18,7 +18,7 @@ const log = text => {
   if (process.env.NODE_ENV !== 'production') {
     console.log(text);
   }
-}
+};
 
 const winURL =
   process.env.NODE_ENV === 'development'
@@ -33,10 +33,10 @@ function toggleWindow() {
 
   // Strange afterimages remain
   if (mainWindow.isVisible()) {
-    log('hide')
+    log('hide');
     mainWindow.webContents.send('hide:req');
   } else {
-    log('show')
+    log('show');
     mainWindow.webContents.send('show:req');
   }
 }
@@ -87,7 +87,7 @@ function createWindow() {
     maximizable: false
   });
 
-  log(`winURL: ${winURL}`)
+  log(`winURL: ${winURL}`);
   mainWindow.loadURL(winURL);
 
   mainWindow.on('closed', () => {
@@ -96,11 +96,11 @@ function createWindow() {
 
   // Strange afterimages remain
   ipcMain.on('hide:res', () => {
-    log(`on 'hide:res'`)
+    log(`on 'hide:res'`);
     mainWindow.hide();
   });
   ipcMain.on('show:res', () => {
-    log(`on 'show:res'`)
+    log(`on 'show:res'`);
     mainWindow.show();
   });
 }
