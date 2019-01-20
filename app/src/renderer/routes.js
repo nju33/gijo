@@ -1,10 +1,10 @@
-import Jogi from 'components/Jogi';
+import Top from './routes/Top';
 
 export default [
   {
     path: '/',
     name: 'jogi',
-    component: Jogi
+    component: Top
   },
   {
     path: '*',
