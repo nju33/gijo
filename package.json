@@ -4,7 +4,9 @@
   "main": "app/dist/main.js",
   "description": "Ruler app that can measure intuitively",
   "scripts": {
+    "prebuild": "cp -R app/src/main/images app/dist/images && cp app/__package.json app/package.json",
     "build": "node tasks/release.js",
+    "postbuild": "rm -rf app/dist/images app/package.json",
     "build:clean": "cross-env PLATFORM_TARGET=clean node tasks/release.js",
     "build:darwin": "cross-env PLATFORM_TARGET=darwin node tasks/release.js",
     "postbuild:darwin": "appdmg appdmg.json ./Gijo.dmg",

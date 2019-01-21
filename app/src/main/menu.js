@@ -1,4 +1,4 @@
-const {app, remote, shell, BowserWindow, Menu} = require('electron')
+const {app, remote, shell, BowserWindow, Menu} = require('electron');
 
 const template = [
   {
@@ -51,7 +51,7 @@ const template = [
       },
       {
         role: 'reload'
-      },
+      }
       // {
       //   role: 'toggledevtools'
       // },
@@ -91,13 +91,13 @@ const template = [
     submenu: [
       {
         label: 'Github Repo',
-        click () {
+        click() {
           shell.openExternal('https://github.com/nju33/jogich');
         }
       }
     ]
   }
-]
+];
 
 if (process.platform === 'darwin') {
   template.unshift({
@@ -132,7 +132,7 @@ if (process.platform === 'darwin') {
         role: 'quit'
       }
     ]
-  })
+  });
   // Edit menu.
   // template[1].submenu.push(
   //   {
@@ -161,7 +161,7 @@ if (process.platform === 'darwin') {
       label: 'Minimize',
       accelerator: 'CmdOrCtrl+M',
       role: 'minimize'
-    },
+    }
     // {
     //   label: 'Zoom',
     //   role: 'zoom'
@@ -173,8 +173,8 @@ if (process.platform === 'darwin') {
     //   label: 'Bring All to Front',
     //   role: 'front'
     // }
-  ]
+  ];
 }
 
-const menu = Menu.buildFromTemplate(template)
-Menu.setApplicationMenu(menu)
+const menu = Menu.buildFromTemplate(template);
+Menu.setApplicationMenu(menu);
